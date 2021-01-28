@@ -1,14 +1,15 @@
 #include <iostream>
+#include <iomanip>
 #include <cstdlib>
 #include <ctime>
 
-const int DIRECTION = 4; // Number of directions to go (up, down, left, right)
+const int DIRECTION = 4; // Number of directions to go (down, up, left, right)
 const int MOVE[][2] = {{0, 1}, {0, -1}, {-1, 0}, {1, 0}}; // Actual movement
 const int X = 0; // X index
 const int Y = 1; // Y index
 
-const char CLOSED = '1';
-const char OPEN = '0';
+const char CLOSED = '&';
+const char OPEN = '_';
 
 void generate(char maze[], int x, int y, int maxTurns, int maxLen);
 
@@ -47,7 +48,7 @@ int main(){
     // Print out the generated map
     for(int i=0;i<ydim;i++){
         for(int j=0;j<xdim;j++){
-            std::cout << map[i*xdim+j] << " ";
+            std::cout << std::setw(2) << map[i*xdim+j] << " ";
         }
         std::cout << std::endl;
     }
@@ -77,14 +78,17 @@ void generate(char maze[], int x, int y, int maxTurns, int maxLen){
         int dir = std::rand() % DIRECTION;
 
         // While the algorithm is able to walk
-        while((xloc >= 0 && xloc < x) && (yloc >= 0 && yloc < y) && length > 0){
+        while(length > 0){
 
             // Place an opening
             maze[yloc*x+xloc] = OPEN;
 
             // Update the current location
-            xloc += MOVE[dir][X];
-            yloc += MOVE[dir][Y];
+            xloc += MOVE[dir][X] % x;
+            yloc += MOVE[dir][Y] % y;
+
+            if(xloc < 0) xloc = x-1;
+            if(yloc < 0) yloc = y-1;
 
             length--;
         }
