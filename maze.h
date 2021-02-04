@@ -24,6 +24,7 @@ class Maze{
     private:
         Cell *start;  // Top left of the grid
         int area;  //How many cells are in the maze
+        int mheight, mwidth;
 
         // Function used to build the maze
         void build(int width, int height);
@@ -36,7 +37,8 @@ class Maze{
 
         ~Maze();  // Destructor
 
-        void print();
+        void print();  // Print out the maze
+        void generate();  // Generate the maze
 
 };
 

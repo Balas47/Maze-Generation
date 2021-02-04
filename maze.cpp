@@ -1,7 +1,8 @@
 #include "maze.h"
 #include <iostream>
+#include <stack>
 
-// The maze is a 10x10 by default.
+// The maze is a 5x5 by default.
 const int DEF_DIM = 5;
 
 // Constants for indexing into the neighbors of a cell
@@ -13,6 +14,8 @@ const int LEFT = 3;
 Maze::Maze(){
 
     area = DEF_DIM * DEF_DIM;
+    mheight = DEF_DIM;
+    mwidth = DEF_DIM;
     build(DEF_DIM, DEF_DIM);
 
 }
@@ -20,6 +23,8 @@ Maze::Maze(){
 Maze::Maze(int width, int height){
 
     area = width * height;
+    mheight = height;
+    mwidth = width;
     build(width, height);
 
 }
@@ -85,5 +90,25 @@ void Maze::build(int width, int height){
 void Maze::print(){
 
     std::cout << "Testing" << std::endl;
+
+}
+
+// Using the depth first method of generating a maze
+void Maze::generate(){
+
+    // Stack is used to keep track of cells being looked at. 
+    std::stack<Cell> checked;
+
+    // Keep track of the number of cells that have been seen
+    int seen = 0;
+
+    checked.push(start);
+
+    // Check all of the cells in the maze
+    while(seen < area && checked.top()){
+
+        checked.top()->seen = true;  // The current cell is marked as seen
+        seen++;  // Update the number of cells that have been seen
+    }
 
 }
