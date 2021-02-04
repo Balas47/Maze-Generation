@@ -2,6 +2,7 @@
 #include <iomanip>
 #include <cstdlib>
 #include <ctime>
+#include "maze.h"
 
 const int DIRECTION = 4; // Number of directions to go (down, up, left, right)
 const int MOVE[][2] = {{0, 1}, {0, -1}, {-1, 0}, {1, 0}}; // Actual movement
@@ -54,6 +55,10 @@ int main(){
     }
 
     delete[] map;
+
+    Maze test;
+
+    test.print();
 
     return 0;
 }
