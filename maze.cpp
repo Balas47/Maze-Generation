@@ -1,6 +1,8 @@
 #include "maze.h"
 #include <iostream>
 #include <stack>
+#include <cstdlib>
+#include <ctime>
 
 // The maze is a 5x5 by default.
 const int DEF_DIM = 5;
@@ -105,19 +107,19 @@ void Maze::print(){
 
                 // The presence of walls determine what is printed around the cell
                 if(i == TOP){
-                    if(row->walls[UP]) std::cout << "***";
-                    else std::cout << "* *";
+                    if(row->walls[UP] == WALL) std::cout << "&&&";
+                    else std::cout << "& &";
 
                 }else if(i == PSIDES){
-                    if(row->walls[LEFT]) std::cout << "* ";
+                    if(row->walls[LEFT] == WALL) std::cout << "& ";
                     else std::cout << "  ";
 
-                    if(row->walls[RIGHT]) std::cout << "*";
+                    if(row->walls[RIGHT] == WALL) std::cout << "&";
                     else std::cout << " ";
 
                 }else if(i == BOTTOM){
-                    if(row->walls[DOWN]) std::cout << "***";
-                    else std::cout << "* *";
+                    if(row->walls[DOWN] == WALL) std::cout << "&&&";
+                    else std::cout << "& &";
                 }
 
                 row = row->neighbors[RIGHT];
@@ -133,15 +135,60 @@ void Maze::print(){
 // Using the depth first method of generating a maze
 void Maze::generate(){
 
+    std::srand(std::time(nullptr));
+
     // Stack is used to keep track of cells being looked at. 
     std::stack<Cell*> checked;
 
     checked.push(start);
 
     // Check all of the cells in the maze
-    while(checked.top()){
+    while(!checked.empty()){
 
-        checked.top()->seen = true;  // The current cell is marked as seen
+        Cell* curr = checked.top();
+
+        curr->seen = true;  // The current cell is marked as seen
+
+        // Randomly select a neighbor
+        int random = std::rand() % SIDES;
+        bool valid = false;
+
+        // Check to make sure the selected neighbor has not already been seen
+        for(int i=0;i<SIDES;i++){
+            if(curr->neighbors[(i+random)%SIDES] &&!(curr->neighbors[(i+random)%SIDES]->seen)){
+                random = (random + i) % SIDES;
+                valid = true;
+                break;
+            }
+        }
+
+        // If an unseen neighbor was found, push that neighbor onto the stack and 
+        // "break" down the walls
+        if(valid){
+
+            checked.push(curr->neighbors[random]);
+
+            // Set the appropriate walls index to indicate a path
+            if(random == UP){
+                curr->walls[UP] = PATH;
+                curr->neighbors[UP]->walls[DOWN] = PATH;
+
+            }else if(random == LEFT){
+                curr->walls[LEFT] = PATH;
+                curr->neighbors[LEFT]->walls[RIGHT] = PATH;
+
+            }else if(random == DOWN){
+                curr->walls[DOWN] = PATH;
+                curr->neighbors[DOWN]->walls[UP] = PATH;
+
+            }else if(random == RIGHT){
+                curr->walls[RIGHT] = PATH;
+                curr->neighbors[RIGHT]->walls[LEFT] = PATH;
+            }
+
+        // If all neighbors have been visited, pop the current cell from the stack
+        }else{
+            checked.pop();
+        }
     }
-
 }

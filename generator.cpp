@@ -21,6 +21,10 @@ int main(){
 
     // Ask the user for all of the inputs to the random walk algorithm
 
+    std::cout << "##########################" << std::endl;
+    std::cout << "Inputs for Maze Dimensions" << std::endl;
+    std::cout << "##########################" << std::endl;
+
     xdim = 0;
     std::cout << "Width of the Maze: ";
     while(!(std::cin>>xdim)){
@@ -34,6 +38,12 @@ int main(){
         std::cin.clear();
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     }while(!(std::cin>>ydim));
+
+
+    std::cout << "###############################################" << std::endl;
+    std::cout << "Maze Generation Using the Random Walk Algorithm" << std::endl;
+
+    std::cout << "The random walk algorithm requires 2 additional inputs:" << std::endl;
 
     do{
         std::cout << "Max number of turns the algorithm can make: ";
@@ -66,8 +76,16 @@ int main(){
         std::cout << std::endl;
     }
 
-    Maze test;
+    std::cout << "###############################################" << std::endl;
+
+    std::cout << "\n########################################" << std::endl;
+    std::cout << "Maze Generation using Depth First Search" << std::endl;
+
+    Maze test(xdim, ydim);
+    test.generate();
     test.print();
+
+    std::cout << "########################################" << std::endl;
 
     delete[] map;
     return 0;
