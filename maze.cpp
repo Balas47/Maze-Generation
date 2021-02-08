@@ -23,9 +23,6 @@ Maze::Maze(){
     mheight = DEF_DIM;
     mwidth = DEF_DIM;
     build();
-
-    std::cout << "ERROR?" << std::endl;
-
 }
 
 Maze::Maze(int width, int height){
@@ -34,7 +31,6 @@ Maze::Maze(int width, int height){
     mheight = height;
     mwidth = width;
     build();
-
 }
 
 Maze::~Maze(){
@@ -65,9 +61,8 @@ Maze::~Maze(){
 
 void Maze::build(){
 
-    Cell** grid = new Cell*[mheight*mwidth];
-    std::cout << "GRID" << std::endl;
-
+    Cell** grid = new Cell*[area]{nullptr};
+    
     // Go through the grid and create all of the cells
     for(int i=0;i<mheight;i++){
         for(int j=0;j<mwidth;j++){
@@ -101,10 +96,9 @@ void Maze::print(){
     // Go down each of the rows
     while(toPrint){
 
-        Cell *row = toPrint->neighbors[RIGHT];
-
         // Each cell has 3 parts, the top, sides, and the bottom
         for(int i=0;i<PRINT;i++){
+            Cell *row = toPrint;
 
             // Go across each row
             while(row){
@@ -125,6 +119,8 @@ void Maze::print(){
                     if(row->walls[DOWN]) std::cout << "***";
                     else std::cout << "* *";
                 }
+
+                row = row->neighbors[RIGHT];
 
             }
             std::cout << std::endl;

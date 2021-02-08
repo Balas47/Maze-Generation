@@ -20,11 +20,14 @@ int main(){
     int xdim, ydim, turns, len;
 
     // Ask the user for all of the inputs to the random walk algorithm
-    do{
+
+    xdim = 0;
+    std::cout << "Width of the Maze: ";
+    while(!(std::cin>>xdim)){
         std::cout << "Width of the Maze: ";
         std::cin.clear();
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-    }while(!(std::cin>>xdim));
+    }
 
     do{
         std::cout << "Height of the Maze: ";
