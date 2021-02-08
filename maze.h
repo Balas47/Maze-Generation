@@ -2,8 +2,8 @@
 #define MAZE
 
 // Constants for defining where the walls for a cell in the maze are
-const int WALL = 0;
-const int PATH = 1;
+const int WALL = 1;
+const int PATH = 0;
 const int SIDES = 4;
 
 // Each cell in the maze can have a neighbor up, left, down, and right. There may be a wall
@@ -12,7 +12,7 @@ struct Cell{
 
     bool seen = false;  // Check whether the cell has been visited
     Cell* neighbors[SIDES] = {nullptr, nullptr, nullptr, nullptr};
-    int walls[SIDES] = {0, 0, 0, 0};
+    int walls[SIDES] = {WALL, WALL, WALL, WALL};
 
 };
 
@@ -27,7 +27,7 @@ class Maze{
         int mheight, mwidth;
 
         // Function used to build the maze
-        void build(int width, int height);
+        void build();
 
     public:
 

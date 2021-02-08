@@ -1,5 +1,6 @@
 #include <iostream>
 #include <iomanip>
+#include <limits>
 #include <cstdlib>
 #include <ctime>
 #include "maze.h"
@@ -21,18 +22,26 @@ int main(){
     // Ask the user for all of the inputs to the random walk algorithm
     do{
         std::cout << "Width of the Maze: ";
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     }while(!(std::cin>>xdim));
 
     do{
         std::cout << "Height of the Maze: ";
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     }while(!(std::cin>>ydim));
 
     do{
         std::cout << "Max number of turns the algorithm can make: ";
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     }while(!(std::cin>>turns));
 
     do{
         std::cout << "Max length of a given walk: ";
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     }while(!(std::cin>>len));
 
     char *map = new char[xdim*ydim];
@@ -54,12 +63,10 @@ int main(){
         std::cout << std::endl;
     }
 
-    delete[] map;
-
     Maze test;
-
     test.print();
 
+    delete[] map;
     return 0;
 }
 
